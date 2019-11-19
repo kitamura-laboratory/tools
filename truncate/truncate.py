@@ -23,6 +23,7 @@ if __name__ == "__main__":
     results = []
     target_sample_n = int(min_len * target_rate)
     for name, sound, rate in sounds:
-        cut = sound[0:int(min_len * rate), 0]
+        src_len = int(min_len * rate)
+        cut = sound[0:src_len, 0]
         new_name = 'truncated-' + os.path.basename(name) + '.wav'
-        sf.write(new_name, scipy.signal.resample(cut, target_sample_n), target_rate)
+        sf.write(new_name, scipy.signal.resample_poly(cut, target_sample_n, src_len), target_rate)
